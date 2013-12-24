@@ -1,3 +1,12 @@
+# Classes & Jars
 *.class
 *.jar
+
+# Intellij Files
 autovpc.i*
+
+# .gradle folder (caches etc.)
+.gradle
+
+# build directory (generated artifacts)
+build

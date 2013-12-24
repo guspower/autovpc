@@ -1,4 +1,4 @@
-autovpc
-=======
+# AutoVPC
 
-Simple tool to create an Amazon VPC (Virtual Private Cloud)
+A simple tool to automate the creation of Amazon VPC (Virtual Private Cloud) instances.
+
