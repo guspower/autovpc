@@ -29,7 +29,7 @@ class VpcYamlBuilderSpec extends Specification {
 
         then:
             request.cidrBlock == cidrBlock
-            actual is expected
+            actual.is expected
     }
 
 }
