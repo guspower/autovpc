@@ -18,19 +18,19 @@ class VpcYamlBuilderSpec extends Specification {
             def ec2 = Mock(AmazonEC2)
             CreateVpcRequest request
 
-            def response = new CreateVpcResult(vpc: new Vpc(cidrBlock: cidrBlock))
+            def expected = Stub(Vpc)
+            def result = new CreateVpcResult(vpc: expected)
+
+        and:
+            1 * ec2.createVpc({ request = it }) >> result
 
         when:
             def builder = new VpcYamlBuilder(ec2)
-            def vpc = builder.build(config)
+            def actual = builder.build(config)
 
         then:
-            ec2.createVpc({ request = it }) >> response
-
-        and:
-            request
             cidrBlock == request.cidrBlock
-            cidrBlock == vpc.cidrBlock
+            expected.is actual
     }
 
 }
