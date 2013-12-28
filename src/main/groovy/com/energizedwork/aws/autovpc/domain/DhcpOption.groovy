@@ -1,10 +1,14 @@
 package com.energizedwork.aws.autovpc.domain
 
 import groovy.transform.EqualsAndHashCode
+import groovy.transform.Immutable
 import groovy.transform.ToString
 
 @EqualsAndHashCode
 @ToString
-class DhcpOption {
+@Immutable final class DhcpOption {
+
+    String key
+    List values
 
 }

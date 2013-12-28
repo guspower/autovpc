@@ -9,6 +9,7 @@ import groovy.transform.ToString
 @ToString
 @Immutable final class Route {
 
-
+    String destinationCidrBlock
+    String gatewayId
 
 }

@@ -25,7 +25,15 @@ class Vpc {
         subnets?.each { Map subnetData -> _subnets << new Subnet(subnetData) }
     }
 
-    void setRouteTable(List routes) {}
-    void setDhcpOptions(List options) {}
+    void setRouteTable(List routes) {
+        routes?.each { Map routeData -> _routeTable << new Route(routeData) }
+    }
+
+    void setDhcpOptions(List options) {
+        options?.each { Map optionData ->
+            def key = optionData.keySet().iterator().next()
+            _dhcpOptions << new DhcpOption(key:key, values:optionData.get(key))
+        }
+    }
 
 }
