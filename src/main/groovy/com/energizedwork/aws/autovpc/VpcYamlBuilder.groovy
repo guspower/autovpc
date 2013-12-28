@@ -11,7 +11,6 @@ class VpcYamlBuilder {
 
         def vpc = new Vpc()
         config.vpc.each { key, value ->
-            println "$key - $value"
             if(vpc.hasProperty(key)) {
                 vpc.setProperty key, value
             }

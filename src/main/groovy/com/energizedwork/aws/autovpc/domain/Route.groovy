@@ -6,7 +6,7 @@ import groovy.transform.ToString
 
 
 @EqualsAndHashCode
-@ToString
+@ToString(includePackage=false)
 @Immutable final class Route {
 
     String destinationCidrBlock

@@ -7,7 +7,7 @@ class VpcYamlBuilderSpec extends Specification {
 
     // yaml + defaults -> credentials + aggregrate graph -> realize as event stream -> gateway <-> aws api
 
-    def 'can build vpc from minimal yaml config'() {
+    def 'can build vpc from yaml config'() {
         given:
             def config =
 '''

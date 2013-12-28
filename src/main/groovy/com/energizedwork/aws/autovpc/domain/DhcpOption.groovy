@@ -5,7 +5,7 @@ import groovy.transform.Immutable
 import groovy.transform.ToString
 
 @EqualsAndHashCode
-@ToString
+@ToString(includePackage=false)
 @Immutable final class DhcpOption {
 
     String key
