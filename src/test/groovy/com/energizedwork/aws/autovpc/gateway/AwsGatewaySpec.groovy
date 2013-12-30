@@ -39,15 +39,20 @@ class AwsGatewaySpec extends Specification {
             response.data.vpc.instanceTenancy == instanceTenancy
 
         and:
-'''vpc:
-  cidrBlock: 10.0.0.0/16
-  dhcpOptionsId: null
-  instanceTenancy: default
-  state: null
-  tags: {autoConstruct: true, empty: true}
-  vpcId: null
-'''         == new Yaml().dump(response.data)
+            asTree('''
+vpc {
+  cidrBlock = '10.0.0.0/16'
+  dhcpOptionsId = null
+  instanceTenancy = 'default'
+  state = null
+  tags = [autoConstruct: true, empty: true]
+  vpcId = null
+} ''')      == response.data
 
+    }
+
+    private ConfigObject asTree(String script) {
+        new ConfigSlurper().parse(new GroovyShell().parse(script))
     }
 
 
