@@ -7,6 +7,6 @@ import groovy.transform.TupleConstructor
 class AwsResponse {
 
     String callName
-    Object response
+    ConfigObject data
 
 }

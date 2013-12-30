@@ -1,9 +1,13 @@
 package com.energizedwork.aws.autovpc.gateway
 
+import com.amazonaws.AmazonWebServiceRequest
 import com.amazonaws.services.ec2.AmazonEC2
+import com.energizedwork.aws.autovpc.graph.ObjectToGraph
 
 
 class AwsGateway {
+
+    private final String AWS_REQUEST_PACKAGE = 'com.amazonaws.services.ec2.model'
 
     private AmazonEC2 ec2
 
@@ -16,17 +20,28 @@ class AwsGateway {
     }
 
     AwsResponse call(AwsRequest ar) {
-        def request = Class.forName("com.amazonaws.services.ec2.model.${ar.callName.capitalize()}Request").newInstance()
+        def request = newRequest(ar.callName)
+        populateRequest request, ar.parameters
 
-        ar.parameters.each { key, value ->
+        def response = ec2.invokeMethod(ar.callName, request)
+
+        new AwsResponse(ar.callName, new ObjectToGraph().convert(response))
+    }
+
+    private AmazonWebServiceRequest newRequest(String name) {
+        Class.forName(calculateRequestClassName(name)).newInstance()
+    }
+
+    private void populateRequest(AmazonWebServiceRequest request, Map parameters) {
+        parameters.each { key, value ->
             if(request.hasProperty(key)) {
                 request."$key" = value
             }
         }
+    }
 
-        def response = ec2.invokeMethod(ar.callName, request)
-
-        new AwsResponse(ar.callName, response)
+    private String calculateRequestClassName(String name) {
+        "${AWS_REQUEST_PACKAGE}.${name.capitalize()}Request"
     }
 
 }
