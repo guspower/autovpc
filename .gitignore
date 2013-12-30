@@ -8,5 +8,6 @@ autovpc.i*
 # .gradle folder (caches etc.)
 .gradle
 
-# build directory (generated artifacts)
+# build directories (generated artifacts)
 build
+out
