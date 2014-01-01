@@ -1,5 +1,6 @@
 package com.energizedwork.aws.autovpc.gateway
 
+import com.energizedwork.aws.autovpc.graph.ObjectGraphBuilder
 import com.amazonaws.AmazonWebServiceRequest
 import com.amazonaws.services.ec2.AmazonEC2
 
@@ -23,7 +24,7 @@ class AwsGateway {
 
         def response = ec2.invokeMethod(ar.callName, request)
 
-        new AwsResponse(ar.callName, new com.energizedwork.aws.autovpc.graph.ObjectGraphBuilder().build(response))
+        new AwsResponse(ar.callName, ObjectGraphBuilder.fromObject(response))
     }
 
     private AmazonWebServiceRequest newRequest(String name) {

@@ -3,11 +3,21 @@ package com.energizedwork.aws.autovpc.graph
 
 class ObjectGraphBuilder {
 
-    ObjectGraph build(Object object) {
-        def result = new ConfigObject()
-        convertObjectToProperties object, result
+    static ObjectGraph fromObject(Object object) {
+        new ObjectGraphBuilder().build object
+    }
 
-        new ObjectGraph(result)
+    static ObjectGraph fromScript(String script) {
+        ConfigObject data = new ConfigSlurper().parse(new GroovyShell().parse(script))
+        new ObjectGraph(data)
+    }
+
+    private ConfigObject data = new ConfigObject()
+
+    private ObjectGraph build(Object object) {
+        convertObjectToProperties object, data
+
+        new ObjectGraph(data)
     }
 
     private void convertObjectToProperties(Object source, ConfigObject graph, String namespace = '') {

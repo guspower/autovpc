@@ -1,10 +1,11 @@
 package com.energizedwork.aws.autovpc.gateway
 
+import static com.energizedwork.aws.autovpc.graph.ObjectGraphBuilder.fromScript as asGraph
+
 import com.amazonaws.services.ec2.AmazonEC2
 import com.amazonaws.services.ec2.model.CreateVpcRequest
 import com.amazonaws.services.ec2.model.CreateVpcResult
 import com.amazonaws.services.ec2.model.Vpc
-import com.energizedwork.aws.autovpc.graph.ObjectGraph
 import spock.lang.Specification
 
 
@@ -49,11 +50,6 @@ vpc {
   vpcId = null
 } ''')      == response.data
 
-    }
-
-    private ObjectGraph asGraph(String script) {
-        ConfigObject data = new ConfigSlurper().parse(new GroovyShell().parse(script))
-        new ObjectGraph(data)
     }
 
 }
