@@ -1,5 +1,6 @@
 package com.energizedwork.aws.autovpc.gateway
 
+import com.energizedwork.aws.autovpc.graph.ObjectGraph
 import groovy.transform.TupleConstructor
 
 
@@ -7,6 +8,6 @@ import groovy.transform.TupleConstructor
 class AwsResponse {
 
     String callName
-    ConfigObject data
+    ObjectGraph data
 
 }

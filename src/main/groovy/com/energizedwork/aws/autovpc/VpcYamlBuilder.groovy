@@ -7,7 +7,6 @@ class VpcYamlBuilder {
 
     Vpc build(String yaml) {
         def config = new Yaml().load(yaml)
-        println config
 
         def vpc = new Vpc()
         config.vpc.each { key, value ->

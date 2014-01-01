@@ -4,7 +4,7 @@ import com.amazonaws.services.ec2.AmazonEC2
 import com.amazonaws.services.ec2.model.CreateVpcRequest
 import com.amazonaws.services.ec2.model.CreateVpcResult
 import com.amazonaws.services.ec2.model.Vpc
-import org.yaml.snakeyaml.Yaml
+import com.energizedwork.aws.autovpc.graph.ObjectGraph
 import spock.lang.Specification
 
 
@@ -39,7 +39,7 @@ class AwsGatewaySpec extends Specification {
             response.data.vpc.instanceTenancy == instanceTenancy
 
         and:
-            asTree('''
+            asGraph('''
 vpc {
   cidrBlock = '10.0.0.0/16'
   dhcpOptionsId = null
@@ -51,9 +51,9 @@ vpc {
 
     }
 
-    private ConfigObject asTree(String script) {
-        new ConfigSlurper().parse(new GroovyShell().parse(script))
+    private ObjectGraph asGraph(String script) {
+        ConfigObject data = new ConfigSlurper().parse(new GroovyShell().parse(script))
+        new ObjectGraph(data)
     }
-
 
 }
