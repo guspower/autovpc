@@ -1,8 +1,12 @@
 package com.energizedwork.aws.autovpc.gateway
 
 import com.amazonaws.AmazonWebServiceRequest
+import groovy.transform.EqualsAndHashCode
+import groovy.transform.ToString
 import groovy.transform.TupleConstructor
 
+@EqualsAndHashCode
+@ToString(includePackage=false)
 @TupleConstructor
 class AwsRequest {
 

@@ -17,6 +17,8 @@ class Vpc {
     private List<Route> _routeTable = []
     private List<DhcpOption> _dhcpOptions = []
 
+    String vpcId
+
     List<Subnet> getSubnets() { _subnets.asImmutable() }
     List<Route> getRouteTable() { _routeTable.asImmutable() }
     List<DhcpOption> getDhcpOptions() { _dhcpOptions.asImmutable() }

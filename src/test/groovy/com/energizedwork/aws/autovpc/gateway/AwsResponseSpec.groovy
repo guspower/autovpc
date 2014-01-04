@@ -11,15 +11,17 @@ class AwsResponseSpec extends Specification {
 
     def 'can unmarshall aws sdk response into object graph'() {
         given:
+            def requestData = scenarios.createVpc.request
+
             def sdkResponse = new CreateVpcResult()
-            sdkResponse.vpc = new Vpc(scenarios.createVpc)
+            sdkResponse.vpc = new Vpc(requestData)
 
         when:
             def response = new AwsResponse('createVpc', sdkResponse)
 
         then:
-            response.data.vpc.cidrBlock       == scenarios.createVpc.cidrBlock
-            response.data.vpc.instanceTenancy == scenarios.createVpc.instanceTenancy
+            response.data.vpc.cidrBlock       == requestData.cidrBlock
+            response.data.vpc.instanceTenancy == requestData.instanceTenancy
     }
 
 }

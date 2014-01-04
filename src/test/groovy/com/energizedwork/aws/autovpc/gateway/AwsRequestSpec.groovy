@@ -10,15 +10,16 @@ class AwsRequestSpec extends Specification {
 
     def 'can convert to amazon sdk request type'() {
         given:
-            def request = new AwsRequest('createVpc', scenarios.createVpc)
+            def requestData = scenarios.createVpc.request
+            def request = new AwsRequest('createVpc', requestData)
 
         when:
             AmazonWebServiceRequest awsRequest = request.asSDKRequest()
 
         then:
             awsRequest.class           == CreateVpcRequest
-            awsRequest.cidrBlock       == scenarios.createVpc.cidrBlock
-            awsRequest.instanceTenancy == scenarios.createVpc.instanceTenancy
+            awsRequest.cidrBlock       == requestData.cidrBlock
+            awsRequest.instanceTenancy == requestData.instanceTenancy
     }
 
 }
