@@ -1,5 +1,6 @@
 package com.energizedwork.aws.autovpc.gateway
 
+import static com.energizedwork.aws.autovpc.data.DataScenarios.scenarios
 import static com.energizedwork.aws.autovpc.graph.ObjectGraphBuilder.fromScript as asGraph
 
 import com.amazonaws.services.ec2.AmazonEC2
@@ -13,12 +14,8 @@ class AwsGatewaySpec extends Specification {
 
     def 'gateway issues requests and extracts response values correctly'() {
         given:
-            String cidrBlock = '10.0.0.0/16'
-            String instanceTenancy = 'default'
-
-        and:
             CreateVpcRequest createVpc
-            def result = new CreateVpcResult(vpc: new Vpc(cidrBlock:cidrBlock, instanceTenancy:instanceTenancy))
+            def result = new CreateVpcResult(vpc: new Vpc(scenarios.createVpc))
 
         and:
             def ec2 = Mock(AmazonEC2)
@@ -26,18 +23,18 @@ class AwsGatewaySpec extends Specification {
             def gateway = new AwsGateway(ec2)
 
         and:
-            def request = new AwsRequest('createVpc', [cidrBlock:cidrBlock, instanceTenancy:instanceTenancy])
+            def request = new AwsRequest('createVpc', scenarios.createVpc)
 
         when:
             def response = gateway.call(request)
 
         then:
-            createVpc.cidrBlock       == '10.0.0.0/16'
-            createVpc.instanceTenancy == 'default'
+            createVpc.cidrBlock       == scenarios.createVpc.cidrBlock
+            createVpc.instanceTenancy == scenarios.createVpc.instanceTenancy
 
         and:
-            response.data.vpc.cidrBlock       == cidrBlock
-            response.data.vpc.instanceTenancy == instanceTenancy
+            response.data.vpc.cidrBlock       == scenarios.createVpc.cidrBlock
+            response.data.vpc.instanceTenancy == scenarios.createVpc.instanceTenancy
 
         and:
             asGraph('''
